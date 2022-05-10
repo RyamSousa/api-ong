@@ -1,18 +1,16 @@
 package com.api.ong.controller.impl;
 
 import com.api.ong.controller.UserController;
+import com.api.ong.model.AnimalModel;
+import com.api.ong.model.GrantModel;
 import com.api.ong.model.UserModel;
 import com.api.ong.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-
-import static com.api.ong.Utils.Message.ID_CANT_BE_NULL;
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 @Component
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -38,6 +36,16 @@ public class UserControllerImpl implements UserController {
     @Override
     public ResponseEntity<UserModel> getById(Long id) {
         return ResponseEntity.ok(userService.getById(id));
+    }
+
+    @Override
+    public ResponseEntity<List<GrantModel>> getGrants(Long id) {
+        return ResponseEntity.ok(userService.getGrants(id));
+    }
+
+    @Override
+    public ResponseEntity<List<AnimalModel>> getAnimals(Long id) {
+        return ResponseEntity.ok(userService.getAnimals(id));
     }
 
     @Override
