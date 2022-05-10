@@ -1,5 +1,6 @@
 package com.api.ong.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,9 +10,10 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.GenerationType.IDENTITY;
 
-@Entity
+@Entity(name = "animal")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -27,11 +29,14 @@ public class AnimalModel {
     private String specie;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private UserModel user;
 
     @ManyToOne
+    @JoinColumn(name = "ong_id")
     private OngModel ong;
 
-    @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(mappedBy = "animal", cascade = ALL)
     private List<ClinicalCaseModel> clinicalCases;
 }

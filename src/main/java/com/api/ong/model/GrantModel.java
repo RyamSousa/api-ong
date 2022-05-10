@@ -26,8 +26,10 @@ public class GrantModel {
     private Double value;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private UserModel user;
 
     @ManyToOne
+    @JoinColumn(name = "clinical_case_id")
     private ClinicalCaseModel clinicalCase;
 }

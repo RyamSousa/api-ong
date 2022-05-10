@@ -1,5 +1,6 @@
 package com.api.ong.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
@@ -35,9 +37,11 @@ public class OngModel {
     @NotNull
     private String address;
 
-    @OneToMany(mappedBy = "ong", cascade = CascadeType.ALL)
-    private List<AnimalModel> animalModels;
+    @JsonIgnore
+    @OneToMany(mappedBy = "ong", cascade = ALL)
+    private List<AnimalModel> animals;
 
-    @OneToMany(mappedBy = "ong", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(mappedBy = "ong", cascade = ALL)
     private List<ClinicalCaseModel> clinicalCases;
 }
