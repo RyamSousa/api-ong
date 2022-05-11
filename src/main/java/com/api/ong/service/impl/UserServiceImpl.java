@@ -11,10 +11,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.constraints.NotNull;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 
 import static com.api.ong.Utils.Message.*;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.springframework.http.HttpStatus.*;
 
 @Component
@@ -25,6 +28,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserModel create(@NotNull UserModel user) {
+        try {
+            MessageDigest algorithm = MessageDigest.getInstance("MD5");
+            byte[] password = algorithm.digest(user.getPassword().getBytes(UTF_8));
+            StringBuilder passwordHexadecimal = new StringBuilder();
+            for (byte b : password) {
+                passwordHexadecimal.append(String.format("%02X", 0xFF & b));
+            }
+            user.setPassword(passwordHexadecimal.toString());
+        } catch (NoSuchAlgorithmException e) {
+            throw new ResponseStatusException(CONFLICT, PASSWORD_CANT_BE_ENCRYPTED);
+        }
+
         if (user.getId() != null) {
             Optional<UserModel> userById = userRepository.findById(user.getId());
 

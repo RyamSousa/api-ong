@@ -7,4 +7,5 @@ public class Message {
     public static final String NO_RECORDS_FOUND = "No records found";
     public static final String RESOURCE_ALREADY_EXISTS = "Resource already exists";
     public static final String USER_OR_ONG_NOT_FOUND = "User or Ong not found";
+    public static final String PASSWORD_CANT_BE_ENCRYPTED = "Password can't be encrypted";
 }
