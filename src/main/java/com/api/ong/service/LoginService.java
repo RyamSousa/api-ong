@@ -1,6 +1,8 @@
 package com.api.ong.service;
 
 import com.api.ong.model.LoginModel;
+import com.api.ong.model.OngModel;
+import com.api.ong.model.UserModel;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -9,7 +11,7 @@ import javax.transaction.Transactional;
 @Transactional
 public interface LoginService {
 
-    LoginModel loginUser(LoginModel user);
+    UserModel loginUser(LoginModel user);
 
-    LoginModel loginOng(LoginModel ong);
+    OngModel loginOng(LoginModel ong);
 }

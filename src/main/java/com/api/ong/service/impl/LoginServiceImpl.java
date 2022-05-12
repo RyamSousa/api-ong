@@ -25,7 +25,7 @@ public class LoginServiceImpl implements LoginService {
     private final UserRepository userRepository;
 
     @Override
-    public LoginModel loginUser(LoginModel user) {
+    public UserModel loginUser(LoginModel user) {
         Optional<UserModel> userById = userRepository.findByEmail(user.getEmail());
         user.setPassword(encryptPassword(user.getPassword()));
 
@@ -37,11 +37,11 @@ public class LoginServiceImpl implements LoginService {
             throw new ResponseStatusException(NOT_FOUND, RESOURCE_NOT_FOUND);
         });
 
-        return user;
+        return userById.get();
     }
 
     @Override
-    public LoginModel loginOng(LoginModel ong) {
+    public OngModel loginOng(LoginModel ong) {
         Optional<OngModel> ongById = ongRepository.findByEmail(ong.getEmail());
         ong.setPassword(encryptPassword(ong.getPassword()));
 
@@ -53,6 +53,6 @@ public class LoginServiceImpl implements LoginService {
             throw new ResponseStatusException(NOT_FOUND, RESOURCE_NOT_FOUND);
         });
 
-        return ong;
+        return ongById.get();
     }
 }
