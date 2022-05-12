@@ -35,6 +35,9 @@ public class OngModel {
     private String email;
 
     @NotNull
+    private String password;
+
+    @NotNull
     private String address;
 
     @JsonIgnore

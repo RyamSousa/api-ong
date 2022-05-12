@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 
-import static com.api.ong.Utils.Message.*;
+import static com.api.ong.utils.Utils.*;
 import static org.springframework.http.HttpStatus.*;
 
 @Component
