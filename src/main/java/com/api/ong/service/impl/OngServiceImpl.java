@@ -65,7 +65,7 @@ public class OngServiceImpl implements OngService {
         Optional<OngModel> ong = ongRepository.findById(id);
 
         if (ong.isEmpty()) {
-            throw new ResponseStatusException(NOT_FOUND, RESOURCE_NOT_FOUND);
+            throw new ResponseStatusException(NOT_FOUND, ONG_NOT_FOUND);
         }
 
         return ong.get();

@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
         Optional<UserModel> user = userRepository.findById(id);
 
         if (user.isEmpty()) {
-            throw new ResponseStatusException(NOT_FOUND, RESOURCE_NOT_FOUND);
+            throw new ResponseStatusException(NOT_FOUND, USER_NOT_FOUND);
         }
 
         return user.get();

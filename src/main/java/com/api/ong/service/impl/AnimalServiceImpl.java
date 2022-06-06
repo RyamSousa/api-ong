@@ -78,7 +78,7 @@ public class AnimalServiceImpl implements AnimalService {
         Optional<AnimalModel> animal = animalRepository.findById(id);
 
         if (animal.isEmpty()) {
-            throw new ResponseStatusException(NOT_FOUND, RESOURCE_NOT_FOUND);
+            throw new ResponseStatusException(NOT_FOUND, ANIMAL_NOT_FOUND);
         }
 
         return animal.get();

@@ -14,7 +14,11 @@ public class Utils {
     public static final String ID_CANT_BE_NULL = "Id can't be null";
     public static final String NO_RECORDS_FOUND = "No records found";
     public static final String RESOURCE_ALREADY_EXISTS = "Resource already exists";
-    public static final String USER_OR_ONG_NOT_FOUND = "User or Ong not found";
+    public static final String GRANT_NOT_FOUND = "User or Ong not found";
+    public static final String CLINICAL_CASE_NOT_FOUND = "User or Ong not found";
+    public static final String ONG_NOT_FOUND = "User or Ong not found";
+    public static final String ANIMAL_NOT_FOUND = "User or Ong not found";
+    public static final String USER_NOT_FOUND = "User or Ong not found";
     public static final String PASSWORD_CANT_BE_ENCRYPTED = "Password can't be encrypted";
     public static final String EMAIL_OR_PASSWORD_INCORRECT = "E-mail or password incorrect";
 

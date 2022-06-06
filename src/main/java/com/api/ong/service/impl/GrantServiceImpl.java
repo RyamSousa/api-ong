@@ -74,7 +74,7 @@ public class GrantServiceImpl implements GrantService {
         Optional<GrantModel> grant = grantRepository.findById(id);
 
         if (grant.isEmpty()) {
-            throw new ResponseStatusException(NOT_FOUND, RESOURCE_NOT_FOUND);
+            throw new ResponseStatusException(NOT_FOUND, GRANT_NOT_FOUND);
         }
 
         return grant.get();

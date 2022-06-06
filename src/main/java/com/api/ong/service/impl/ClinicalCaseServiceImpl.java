@@ -77,7 +77,7 @@ public class ClinicalCaseServiceImpl implements ClinicalCaseService {
         Optional<ClinicalCaseModel> clinicalCase = clinicalCaseRepository.findById(id);
 
         if (clinicalCase.isEmpty()) {
-            throw new ResponseStatusException(NOT_FOUND, RESOURCE_NOT_FOUND);
+            throw new ResponseStatusException(NOT_FOUND, CLINICAL_CASE_NOT_FOUND);
         }
 
         return clinicalCase.get();
