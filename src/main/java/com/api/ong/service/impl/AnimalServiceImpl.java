@@ -8,6 +8,8 @@ import com.api.ong.repository.AnimalRepository;
 import com.api.ong.repository.OngRepository;
 import com.api.ong.repository.UserRepository;
 import com.api.ong.service.AnimalService;
+import com.api.ong.service.OngService;
+import com.api.ong.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,8 +27,8 @@ import static org.springframework.http.HttpStatus.*;
 public class AnimalServiceImpl implements AnimalService {
 
     private final AnimalRepository animalRepository;
-    private final UserRepository userRepository;
-    private final OngRepository ongRepository;
+    private final UserService userService;
+    private final OngService ongService;
 
     @Override
     public AnimalModel create(@NotNull AnimalModel animal) {
@@ -39,16 +41,13 @@ public class AnimalServiceImpl implements AnimalService {
                 }
             });
 
-            Optional<UserModel> userById = userRepository.findById(animal.getUser().getId());
-            Optional<OngModel> ongById = ongRepository.findById(animal.getOng().getId());
-
-            if (ongById.isEmpty()) {
-                throw new ResponseStatusException(BAD_REQUEST, USER_OR_ONG_NOT_FOUND);
-            }
-
-            userById.ifPresent(userModel -> animal.setUser(userById.get()));
-            animal.setOng(ongById.get());
         }
+
+        UserModel userById = userService.getById(animal.getUser().getId());
+        OngModel ongById = ongService.getById(animal.getOng().getId());
+
+        animal.setUser(userById);
+        animal.setOng(ongById);
 
         return animalRepository.save(animal);
     }

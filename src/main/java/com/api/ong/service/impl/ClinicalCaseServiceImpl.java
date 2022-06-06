@@ -7,7 +7,9 @@ import com.api.ong.model.OngModel;
 import com.api.ong.repository.AnimalRepository;
 import com.api.ong.repository.ClinicalCaseRepository;
 import com.api.ong.repository.OngRepository;
+import com.api.ong.service.AnimalService;
 import com.api.ong.service.ClinicalCaseService;
+import com.api.ong.service.OngService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,8 +27,8 @@ import static org.springframework.http.HttpStatus.*;
 public class ClinicalCaseServiceImpl implements ClinicalCaseService {
 
     private final ClinicalCaseRepository clinicalCaseRepository;
-    private final OngRepository ongRepository;
-    private final AnimalRepository animalRepository;
+    private final OngService ongService;
+    private final AnimalService animalService;
 
     @Override
     public ClinicalCaseModel create(@NotNull ClinicalCaseModel clinicalCase) {
@@ -40,15 +42,11 @@ public class ClinicalCaseServiceImpl implements ClinicalCaseService {
             });
         }
 
-        Optional<AnimalModel> animalById = animalRepository.findById(clinicalCase.getAnimal().getId());
-        Optional<OngModel> ongById = ongRepository.findById(clinicalCase.getOng().getId());
+        AnimalModel animalById = animalService.getById(clinicalCase.getAnimal().getId());
+        OngModel ongById = ongService.getById(clinicalCase.getOng().getId());
 
-        if (ongById.isEmpty() || animalById.isEmpty()) {
-            throw new ResponseStatusException(BAD_REQUEST, USER_OR_ONG_NOT_FOUND);
-        }
-
-        clinicalCase.setAnimal(animalById.get());
-        clinicalCase.setOng(ongById.get());
+        clinicalCase.setAnimal(animalById);
+        clinicalCase.setOng(ongById);
 
         return clinicalCaseRepository.save(clinicalCase);
     }

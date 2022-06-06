@@ -1,10 +1,12 @@
 package com.api.ong.service.impl;
 
-import com.api.ong.model.*;
-import com.api.ong.repository.ClinicalCaseRepository;
+import com.api.ong.model.ClinicalCaseModel;
+import com.api.ong.model.GrantModel;
+import com.api.ong.model.UserModel;
 import com.api.ong.repository.GrantRepository;
-import com.api.ong.repository.UserRepository;
+import com.api.ong.service.ClinicalCaseService;
 import com.api.ong.service.GrantService;
+import com.api.ong.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,8 +24,8 @@ import static org.springframework.http.HttpStatus.*;
 public class GrantServiceImpl implements GrantService {
 
     private final GrantRepository grantRepository;
-    private final ClinicalCaseRepository clinicalCaseRepository;
-    private final UserRepository userRepository;
+    private final ClinicalCaseService clinicalCaseService;
+    private final UserService userService;
 
     @Override
     public GrantModel create(@NotNull GrantModel grant) {
@@ -37,15 +39,11 @@ public class GrantServiceImpl implements GrantService {
             });
         }
 
-        Optional<UserModel> userById = userRepository.findById(grant.getUser().getId());
-        Optional<ClinicalCaseModel> clinicalCaseById = clinicalCaseRepository.findById(grant.getClinicalCase().getId());
+        UserModel userById = userService.getById(grant.getUser().getId());
+        ClinicalCaseModel clinicalCaseById = clinicalCaseService.getById(grant.getClinicalCase().getId());
 
-        if (userById.isEmpty() || clinicalCaseById.isEmpty()) {
-            throw new ResponseStatusException(BAD_REQUEST, USER_OR_ONG_NOT_FOUND);
-        }
-
-        grant.setUser(userById.get());
-        grant.setClinicalCase(clinicalCaseById.get());
+        grant.setUser(userById);
+        grant.setClinicalCase(clinicalCaseById);
 
         return grantRepository.save(grant);
     }
