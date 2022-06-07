@@ -1,8 +1,15 @@
-
 spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: ong
+      username: admin
+
+ong:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url:  jdbc:postgresql://localhost:5432/ong
+    jdbcUrl:  jdbc:postgresql://localhost:5432/ong
     username: postgres
     password: admin
   jpa:
