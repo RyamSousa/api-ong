@@ -4,6 +4,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.Locale;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
@@ -38,5 +42,12 @@ public class Utils {
         } catch (NoSuchAlgorithmException e) {
             throw new ResponseStatusException(BAD_REQUEST, PASSWORD_CANT_BE_ENCRYPTED);
         }
+    }
+
+    public static String generateDate(){
+        Date date = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy : HH:mm");
+
+        return format.format(date);
     }
 }

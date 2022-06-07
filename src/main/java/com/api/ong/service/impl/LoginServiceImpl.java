@@ -1,11 +1,14 @@
 package com.api.ong.service.impl;
 
 import com.api.ong.model.LoginModel;
+import com.api.ong.model.LoginRegistrationModel;
 import com.api.ong.model.OngModel;
 import com.api.ong.model.UserModel;
+import com.api.ong.repository.LoginRegistrationRepository;
 import com.api.ong.repository.OngRepository;
 import com.api.ong.repository.UserRepository;
 import com.api.ong.service.LoginService;
+import com.api.ong.utils.Utils;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,6 +24,7 @@ import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class LoginServiceImpl implements LoginService {
 
+    private final LoginRegistrationRepository loginRegistrationRepository;
     private final OngRepository ongRepository;
     private final UserRepository userRepository;
 
@@ -37,6 +41,8 @@ public class LoginServiceImpl implements LoginService {
             throw new ResponseStatusException(NOT_FOUND, RESOURCE_NOT_FOUND);
         });
 
+        loginRegistrationRepository.save(new LoginRegistrationModel(user.getEmail(), Utils.generateDate()));
+
         return userById.get();
     }
 
@@ -52,6 +58,8 @@ public class LoginServiceImpl implements LoginService {
         }, () -> {
             throw new ResponseStatusException(NOT_FOUND, RESOURCE_NOT_FOUND);
         });
+
+        loginRegistrationRepository.save(new LoginRegistrationModel(ong.getEmail(), Utils.generateDate()));
 
         return ongById.get();
     }
