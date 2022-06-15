@@ -54,6 +54,8 @@ public class GrantServiceImpl implements GrantService {
             throw new ResponseStatusException(BAD_REQUEST, ID_CANT_BE_NULL);
         }
 
+        userService.getById(grant.getUser().getId());
+
         return grantRepository.save(grant);
     }
 
