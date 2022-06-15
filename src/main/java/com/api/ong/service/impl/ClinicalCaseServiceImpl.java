@@ -57,6 +57,9 @@ public class ClinicalCaseServiceImpl implements ClinicalCaseService {
             throw new ResponseStatusException(BAD_REQUEST, ID_CANT_BE_NULL);
         }
 
+        animalService.getById(clinicalCase.getAnimal().getId());
+        ongService.getById(clinicalCase.getOng().getId());
+
         return clinicalCaseRepository.save(clinicalCase);
     }
 

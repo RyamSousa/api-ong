@@ -43,10 +43,8 @@ public class AnimalServiceImpl implements AnimalService {
 
         }
 
-        UserModel userById = userService.getById(animal.getUser().getId());
         OngModel ongById = ongService.getById(animal.getOng().getId());
 
-        animal.setUser(userById);
         animal.setOng(ongById);
 
         return animalRepository.save(animal);
@@ -57,6 +55,8 @@ public class AnimalServiceImpl implements AnimalService {
         if (animal.getId() == null) {
             throw new ResponseStatusException(BAD_REQUEST, ID_CANT_BE_NULL);
         }
+
+        ongService.getById(animal.getOng().getId());
 
         return animalRepository.save(animal);
     }
